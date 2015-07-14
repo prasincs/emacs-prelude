@@ -41,7 +41,7 @@
 ;; magit
 (global-set-key (kbd "s-i") 'magit-status)
 
-
+(global-set-key (kbd "s-u") 'revert-buffer)
 
 (setq prelude-guru nil)
 
