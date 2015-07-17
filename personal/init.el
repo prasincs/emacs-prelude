@@ -55,4 +55,6 @@
 
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
+(add-hook 'python-mode 'run-python)
+
 ;;; init.el ends here
