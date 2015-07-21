@@ -28,6 +28,12 @@
 
 (global-set-key (kbd "C-c e") 'hide-cider-error-window)
 
+(defun open-notes ()
+  "Opens the note file"
+  (find-file (abbreviate-file-name
+                       (expand-file-name "~/dotfiles/Emacs.org"))))
+
+(global-set-key (kbd "C-n") 'open-notes)
 
 ;; Taken from technomancy's emacs.d
 (global-set-key (kbd "C-c n")
@@ -57,4 +63,5 @@
 
 (add-hook 'python-mode 'run-python)
 
+(server-start)
 ;;; init.el ends here
