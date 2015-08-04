@@ -63,5 +63,7 @@
 
 (add-hook 'python-mode 'run-python)
 
+(global-wakatime-mode)
+
 (server-start)
 ;;; init.el ends here
