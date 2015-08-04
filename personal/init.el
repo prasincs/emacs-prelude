@@ -65,5 +65,12 @@
 
 (global-wakatime-mode)
 
+;; Home and End jumping around buffer is fucking annoying
+(global-set-key (kbd "<home>")
+                'beginning-of-line)
+
+(global-set-key (kbd "<end>")
+                'end-of-line)
+
 (server-start)
 ;;; init.el ends here
