@@ -72,5 +72,8 @@
 (global-set-key (kbd "<end>")
                 'end-of-line)
 
+;; Paredit hooks
+(add-hook 'clojure-mode-hook #'paredit-mode)
+
 (server-start)
 ;;; init.el ends here
