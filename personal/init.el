@@ -8,6 +8,10 @@
 (add-to-list 'auto-mode-alist '("\\.clj\.[a-zA-Z0-9.]+\\'" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.edn\.[a-zA-Z0-9.]+\\'" . clojure-mode))
 
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 ;; Kill all other buffers except the current one
 (defun kill-other-buffers ()
   "Kill all other buffers."
@@ -42,7 +46,13 @@
                        (untabify (point-min) (point-max))
                        (indent-region (point-min) (point-max))))
 
+;; cider REPL
+;; wrap around
+(setq cider-repl-wrap-history t)
 
+(setq cider-repl-history-size 1000) ; the default is 500
+
+(setq cider-repl-history-file "~/.emacs.d/cider-history")`
 
 ;; magit
 (global-set-key (kbd "s-i") 'magit-status)
@@ -74,6 +84,16 @@
 
 ;; Paredit hooks
 (add-hook 'clojure-mode-hook #'paredit-mode)
+(add-hook 'json-mode 'flymake-json-load)
+
+(require 'json-snatcher)
+(defun js-mode-bindings ()
+  "Sets a hotkey for using the json-snatcher plugin."
+  (when (string-match  "\\.json$" (buffer-name))
+    (local-set-key (kbd "C-c C-g") 'jsons-print-path)))
+(add-hook 'js-mode-hook 'js-mode-bindings)
+(add-hook 'js2-mode-hook 'js-mode-bindings)
+(add-hook 'json-mode 'js-mode-bindings)
 
 (server-start)
 ;;; init.el ends here
