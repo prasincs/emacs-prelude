@@ -59,6 +59,10 @@
 
 (global-set-key (kbd "s-u") 'revert-buffer)
 
+;; Use tab to complete without losing ability to manually indent
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+
+
 (setq prelude-guru nil)
 
 ;;; Fix scrolling
@@ -84,6 +88,7 @@
 
 ;; Paredit hooks
 (add-hook 'clojure-mode-hook #'paredit-mode)
+(add-hook 'cider-repl-mode-hook #'paredit-mode)
 (add-hook 'json-mode 'flymake-json-load)
 
 (require 'json-snatcher)
