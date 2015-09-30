@@ -82,7 +82,7 @@
 ;; Home and End jumping around buffer is fucking annoying
 (global-set-key (kbd "<home>")
                 'beginning-of-line)
-
+0
 (global-set-key (kbd "<end>")
                 'end-of-line)
 
@@ -107,6 +107,13 @@
 (add-hook 'org-shiftleft-final-hook 'windmove-left)
 (add-hook 'org-shiftdown-final-hook 'windmove-down)
 (add-hook 'org-shiftright-final-hook 'windmove-right)
+
+;; Requires coreutils to be installed in mac
+(setq ls-lisp-use-insert-directory-program t)
+(setq insert-directory-program "gls")
+
+
+(persp-mode)
 
 (server-start)
 ;;; init.el ends here
