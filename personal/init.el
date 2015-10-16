@@ -82,9 +82,13 @@
 ;; Home and End jumping around buffer is fucking annoying
 (global-set-key (kbd "<home>")
                 'beginning-of-line)
-0
+
 (global-set-key (kbd "<end>")
                 'end-of-line)
+
+(global-set-key (kbd "C-c p w")
+                'helm-swoop)
+
 
 ;; Paredit hooks
 (add-hook 'clojure-mode-hook #'paredit-mode)
@@ -113,7 +117,18 @@
 (setq insert-directory-program "gls")
 
 
-(persp-mode)
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "PATH"))
+
+
+;; Have to install https://github.com/golang/lint for this to work
+(add-to-list 'load-path (concat (exec-path-from-shell-getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+(require 'golint)
+
+
+
+;(persp-mode)
 
 (server-start)
 ;;; init.el ends here
