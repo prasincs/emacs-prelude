@@ -89,6 +89,9 @@
 (global-set-key (kbd "C-c p w")
                 'helm-swoop)
 
+;; Pressing C-z seems to crash Emacs in OSX every once in a while.
+(global-unset-key (kbd "C-z"))
+
 
 ;; Paredit hooks
 (add-hook 'clojure-mode-hook #'paredit-mode)
