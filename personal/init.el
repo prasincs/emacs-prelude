@@ -7,6 +7,7 @@
 ;;; Code:
 (add-to-list 'auto-mode-alist '("\\.clj\.[a-zA-Z0-9.]+\\'" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.edn\.[a-zA-Z0-9.]+\\'" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.boot\\'" . clojure-mode))
 
 
 (add-to-list 'package-archives
@@ -90,6 +91,7 @@
                 'helm-swoop)
 
 ;; Pressing C-z seems to crash Emacs in OSX every once in a while.
+;; I dont like the behavior anyway.
 (global-unset-key (kbd "C-z"))
 
 
@@ -129,7 +131,25 @@
 (add-to-list 'load-path (concat (exec-path-from-shell-getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 (require 'golint)
 
+(require 'org-crypt)
 
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+(setq org-crypt-key nil)
+
+
+; (setq auto-save-default nil)
+;; Auto-saving does not cooperate with org-crypt.el: so you need
+;; to turn it off if you plan to use org-crypt.el quite often.
+;; Otherwise, you'll get an (annoying) message each time you
+;; start Org.
+
+;; To turn it off only locally, you can insert this:
+;;
+;; # -*- buffer-auto-save-file-name: nil; -*-
 
 ;(persp-mode)
 
