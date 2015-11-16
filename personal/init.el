@@ -153,5 +153,7 @@
 
 ;(persp-mode)
 
+(require 'dot-mode)
+
 (server-start)
 ;;; init.el ends here
