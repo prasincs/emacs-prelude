@@ -131,18 +131,37 @@
 (add-to-list 'load-path (concat (exec-path-from-shell-getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
 (require 'golint)
 
-(require 'org-crypt)
-
+;; Go lang defaults
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
-(org-crypt-use-before-save-magic)
-(setq org-tags-exclude-from-inheritance (quote ("crypt")))
 (add-hook 'go-mode-hook (lambda ()
                           (local-set-key (kbd "C-c C-w") 'go-goto-imports)))
+
+
+
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+(require 'org-crypt)
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
 (setq org-crypt-key nil)
 
+
+;; To enable org-table and markdown mode to play nicely
+(require 'org-table)
+
+(defun cleanup-org-tables ()
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "-+-" nil t) (replace-match "-|-"))
+    ))
+
+(add-hook 'markdown-mode-hook 'orgtbl-mode)
+(add-hook 'markdown-mode-hook
+          (lambda()
+            (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
+
+;; end org-table
 
 ; (setq auto-save-default nil)
 ;; Auto-saving does not cooperate with org-crypt.el: so you need
