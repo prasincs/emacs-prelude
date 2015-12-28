@@ -133,9 +133,12 @@
 
 (require 'org-crypt)
 
+(setq gofmt-command "goimports")
+(add-hook 'before-save-hook 'gofmt-before-save)
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-
+(add-hook 'go-mode-hook (lambda ()
+                          (local-set-key (kbd "C-c C-w") 'go-goto-imports)))
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
 (setq org-crypt-key nil)
