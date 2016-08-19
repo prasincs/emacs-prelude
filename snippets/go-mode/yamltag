@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: yamltag
+# key: yamltag
+# binding: direct-keybinding
+# --
+yaml:"${1:str}" json:"$1,omitempty"

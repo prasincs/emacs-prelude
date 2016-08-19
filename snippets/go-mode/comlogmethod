@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: comlogmethod
+# key: comlogmethod
+# binding: direct-keybinding
+# --
+func (l *Logger) ${1:name}(format string, args ...interface{}) {
+	lineNum := fileInfo(l.CallDepth)
+	l.logger.WithFields(logrus.Fields{"module": l.moduleName,
+		"linenum": lineNum}).$1(format, args...)
+}

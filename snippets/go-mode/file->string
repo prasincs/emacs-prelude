@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: readFromFile
+# key: readFromFile
+# binding: direct-keybinding
+# --
+
+${1:content}, err := ioutil.ReadFile(${2:filePath})
+if err != nil {
+      //Do something
+}

@@ -1,0 +1,18 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: writeTofile
+# key: writeToFile
+# binding: direct-keybinding
+# --
+
+${1:file}, err := os.Create(${2:filename})
+defer $1.Close()
+
+if err != nil {
+         // do Something
+}
+
+_, err := io.WriteString($1, ${3:toWrite})
+
+if err != nil {
+         // do Something
+}

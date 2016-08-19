@@ -127,15 +127,32 @@
   (exec-path-from-shell-copy-env "PATH"))
 
 
-;; Have to install https://github.com/golang/lint for this to work
-(add-to-list 'load-path (concat (exec-path-from-shell-getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+;; Have to install  https://github.com/golang/lint for this to work
+
+(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+(add-to-list 'load-path (concat (getenv "GOPATH")  "/src/golang.org/x/tools/cmd/guru"))
 (require 'golint)
 
 ;; Go lang defaults
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
-(add-hook 'go-mode-hook (lambda ()
-                          (local-set-key (kbd "C-c C-w") 'go-goto-imports)))
+(defun my-go-mode-hook ()
+                                        ; Use goimports instead of go-fmt
+  (setq gofmt-command "goimports")
+                                        ; Call Gofmt before saving
+  (add-hook 'before-save-hook 'gofmt-before-save)
+                                        ; Customize compile command to run go build
+  (if (not (string-match "go" compile-command))
+      (set (make-local-variable 'compile-command)
+           "go generate && go build -v && go test -v && go vet"))
+                                        ; Go oracle
+  (load-file "$GOPATH/src/golang.org/x/tools/cmd/guru/go-guru.el")
+                                        ; Godef jump key binding
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (yas-minor-mode-on)
+  (local-set-key (kbd "C-c C-w") 'go-goto-imports)
+  )
+(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
 
@@ -161,6 +178,9 @@
           (lambda()
             (add-hook 'after-save-hook 'cleanup-org-tables  nil 'make-it-local)))
 
+
+(add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/yasnippet-go")
+
 ;; end org-table
 
 ; (setq auto-save-default nil)
@@ -173,7 +193,9 @@
 ;;
 ;; # -*- buffer-auto-save-file-name: nil; -*-
 
-;(persp-mode)
+;;(persp-mode)
+
+
 
 (require 'dot-mode)
 
