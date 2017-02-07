@@ -151,17 +151,22 @@
   (local-set-key (kbd "M-.") 'godef-jump)
   (yas-minor-mode-on)
   (local-set-key (kbd "C-c C-w") 'go-goto-imports)
+  (define-key go-mode-map (kbd "C-x f") 'go-test-current-file)
+  (define-key go-mode-map (kbd "C-x t") 'go-test-current-test)
+  (define-key go-mode-map (kbd "C-x p") 'go-test-current-project)
+  (define-key go-mode-map (kbd "C-x B") 'go-test-current-benchmark)
+  (define-key go-mode-map (kbd "C-x x") 'go-run)
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
 
-(org-crypt-use-before-save-magic)
-(setq org-tags-exclude-from-inheritance (quote ("crypt")))
-(require 'org-crypt)
+;(org-crypt-use-before-save-magic)
+;(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+;(require 'org-crypt)
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
-(setq org-crypt-key nil)
+;(setq org-crypt-key nil)
 
 
 ;; To enable org-table and markdown mode to play nicely

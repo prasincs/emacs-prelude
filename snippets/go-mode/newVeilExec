@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: AddExecutor
+# key: AddExecutor
+# --
+
+func $1Executor(cmd *Command,
+	mesosAPI *mesos_api.MesosAPI,
+	frameworkName string, serviceName string,
+	files []string,
+	args []string) error {
+
+	
+
+	return nil
+}
