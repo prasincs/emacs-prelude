@@ -2,8 +2,6 @@
 
 ;;; Commentary:
 
-;; Something something.
-
 ;;; Code:
 (add-to-list 'auto-mode-alist '("\\.clj\.[a-zA-Z0-9.]+\\'" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.edn\.[a-zA-Z0-9.]+\\'" . clojure-mode))
@@ -12,6 +10,7 @@
 
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 
 ;; Kill all other buffers except the current one
 (defun kill-other-buffers ()
@@ -78,7 +77,11 @@
 
 (add-hook 'python-mode 'run-python)
 
-(global-wakatime-mode)
+
+
+;; (setq wakatime-api-key "fac98422-da26-4b29-b6e1-23dd5218e0b6")
+;; (setq wakatime-cli-path "/usr/local/bin/wakatime")
+;; (global-wakatime-mode)
 
 ;; Home and End jumping around buffer is fucking annoying
 (global-set-key (kbd "<home>")
@@ -99,6 +102,10 @@
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 (add-hook 'json-mode 'flymake-json-load)
+
+;; disable global flycheck mode because it's a resource hog
+(global-flycheck-mode -1)
+(yas-global-mode 1)
 
 (require 'json-snatcher)
 (defun js-mode-bindings ()
@@ -133,10 +140,14 @@
 (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/golang.org/x/tools/cmd/guru"))
 (require 'golint)
 
+(load-file "~/.emacs.d/personal/gotests.el")
+(require 'gotests)
+
 ;; Go lang defaults
 (setq gofmt-command "goimports")
 (add-hook 'before-save-hook 'gofmt-before-save)
 (defun my-go-mode-hook ()
+
                                         ; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
                                         ; Call Gofmt before saving
@@ -145,9 +156,9 @@
   (if (not (string-match "go" compile-command))
       (set (make-local-variable 'compile-command)
            "go generate && go build -v && go test -v && go vet"))
-                                        ; Go oracle
-  (load-file "$GOPATH/src/golang.org/x/tools/cmd/guru/go-guru.el")
-                                        ; Godef jump key binding
+  ;; Go oracle
+  ;;(load-file "$GOPATH/src/github.com/dominikh/go-mode/go-guru.el")
+  ;; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   (yas-minor-mode-on)
   (local-set-key (kbd "C-c C-w") 'go-goto-imports)
